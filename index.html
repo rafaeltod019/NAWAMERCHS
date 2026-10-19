@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NAWAMERCH — Official Store</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --navy: #1E90FF;
+  --yellow: #ffffff;
+  --bg: #1E90FF;
+  --white: #FFF133;
+}
+
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--white)}
+header{background:var(--navy);padding:18px 6%;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
+.logo{font-size:24px;font-weight:900;letter-spacing:1px}
+.logo span,h1 span{color:var(--yellow)}
+button,a{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.cart-btn,.buy{background:var(--yellow);color:#080b12;border:0;border-radius:6px;padding:11px 14px;font-weight:bold}
+.hero{padding:75px 7%;min-height:410px;display:flex;align-items:center;justify-content:space-between;gap:30px;background:radial-gradient(ellipse at 85% 40%,#283e69,transparent 55%),var(--navy)}
+.hero-text{max-width:570px}
+.tag{font-size:12px;letter-spacing:4px;color:var(--yellow);font-weight:bold;margin-bottom:20px}
+h1{font-size:clamp(42px,8vw,76px);line-height:1;margin-bottom:20px}
+.hero p{line-height:1.8;color:#cbd1df;margin-bottom:25px}
+.hero-art{font-size:130px;padding:35px;border:1px solid #ffffff25;border-radius:20px;background:#ffffff08}
+section.products-section{padding:65px 6%}
+.section-title{font-size:36px;margin-bottom:28px}
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{border:1px solid #ffffff20;border-radius:12px;overflow:hidden;background:#111621}
+.photo{height:220px;display:flex;align-items:center;justify-content:center;background:linear-gradient(140deg,#24375a,#111827);font-size:90px}
+.photo img{width:100%;height:100%;object-fit:cover}
+.info{padding:17px}
+.info h3{margin-bottom:8px;font-size:17px}
+.info p{font-size:13px;color:#a9afbd;margin-bottom:16px}
+.bottom{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.price{color:var(--yellow);font-weight:bold;font-size:14px}
+.add{padding:9px 10px;border:1px solid #ffffff40;background:transparent;color:white;border-radius:5px}
+.add:hover{background:var(--yellow);color:#080b12}
+.about{padding:60px 7%;background:var(--navy);text-align:center}
+.about h2{font-size:34px;margin-bottom:18px}
+.about p{color:#cbd1df;max-width:650px;margin:auto;line-height:1.8}
+footer{padding:25px 6%;color:#a9afbd;font-size:13px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.overlay{display:none;position:fixed;inset:0;background:#000b;z-index:10;justify-content:flex-end}
+.overlay.show{display:flex}
+.drawer{width:min(420px,100%);background:#111621;padding:24px;overflow:auto}
+.drawer-head{display:flex;justify-content:space-between;margin-bottom:25px}
+.close{background:none;border:0;color:white;font-size:28px}
+.item{padding:15px 0;border-bottom:1px solid #ffffff20;display:flex;justify-content:space-between;gap:10px}
+.item small{display:block;color:var(--yellow);margin-top:7px}
+.remove{background:none;color:#ff8585;border:0}
+.total{display:flex;justify-content:space-between;font-weight:bold;margin:25px 0}
+.checkout{width:100%;padding:15px;background:var(--yellow);border:0;border-radius:6px;font-weight:bold}
+@media(max-width:700px){.hero{padding:55px 6%;flex-direction:column;align-items:flex-start}.hero-art{align-self:center;font-size:95px}.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.photo{height:160px;font-size:65px}.info{padding:12px}.info h3{font-size:14px}.price{font-size:12px}.add{font-size:11px;padding:8px}.section-title{font-size:29px}}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">NAWA<span>MERCH</span></a>
+  <button class="cart-btn" onclick="showCart()">Keranjang (<span id="count">0</span>)</button>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-text">
+    <div class="tag">OFFICIAL MERCHANDISE</div>
+    <h1>WEAR YOUR<br><span>IDENTITY.</span></h1>
+    <p>Lebih dari sekadar pakaian. NAWAMERCH membawa identitas, kreativitas, dan semangat musik dalam setiap karya.</p>
+    <a class="cart-btn" href="#produk">JELAJAHI PRODUK ↗</a>
+  </div>
+  <div class="hero-art">👕</div>
+</section>
+
+<section class="products-section" id="produk">
+  <div class="tag">OUR COLLECTION</div>
+  <h2 class="section-title">Produk Pilihan.</h2>
+  <div class="products" id="products"></div>
+</section>
+
+<section class="about">
+  <div class="tag">MORE THAN MERCH</div>
+  <h2>THIS IS NAWAMERCH.</h2>
+  <p>Terinspirasi dari semangat UKM Musik Nawasena. Kami menghadirkan merchandise untuk mengekspresikan identitas, kreativitas, dan kecintaan terhadap musik.</p>
+</section>
+</main>
+
+<footer>
+  <strong>NAWAMERCH © 2026</strong>
+  <span>Wear the sound. Show your identity.</span>
+</footer>
+
+<div class="overlay" id="overlay" onclick="if(event.target===this)hideCart()">
+  <div class="drawer">
+    <div class="drawer-head">
+      <h2>Keranjang Belanja</h2>
+      <button class="close" onclick="hideCart()">×</button>
+    </div>
+    <div id="items"></div>
+    <div class="total"><span>Total</span><span id="total">Rp0</span></div>
+    <button class="checkout" onclick="checkout()">PESAN VIA WHATSAPP ↗</button>
+  </div>
+</div>
+
+<script>
+// GANTI DENGAN NOMOR WHATSAPP TOKO KAMU
+// Gunakan kode negara 62, tanpa tanda +.
+const WA_NUMBER = "6285854625906";
+
+// Ubah nama, harga, emoji, dan foto produk di sini.
+// Isi image dengan URL foto produk jika sudah ada.
+const products = [
+ {id:1,name:"NAWASENA T-Shirt",desc:"Kaos merchandise original",price:85000,emoji:"🎸",image:""},
+ {id:2,name:"NAWANOISE T-Shirt",desc:"Music culture collection",price:95000,emoji:"🎸",image:""},
+ {id:3,name:"NAWASENA Hoodie",desc:"Hoodie casual edition",price:175000,emoji:"🧥",image:""},
+ {id:4,name:"NAWA Tote Bag",desc:"Tas merchandise",price:45000,emoji:"👜",image:""},
+ {id:5,name:"NAWA Cap",desc:"Topi merchandise",price:55000,emoji:"🧢",image:""},
+ {id:6,name:"NAWA Sticker Pack",desc:"Paket stiker musik",price:15000,emoji:"🎵",image:""}
+];
+
+let cart=[];
+
+function money(n){
+ return new Intl.NumberFormat("id-ID",{
+  style:"currency",currency:"IDR",maximumFractionDigits:0
+ }).format(n);
+}
+
+function renderProducts(){
+ document.getElementById("products").innerHTML=products.map(p=>`
+  <article class="card">
+   <div class="photo">
+    ${p.image?`<img src="${p.image}" alt="${p.name}">`:p.emoji}
+   </div>
+   <div class="info">
+    <h3>${p.name}</h3>
+    <p>${p.desc}</p>
+    <div class="bottom">
+     <span class="price">${money(p.price)}</span>
+     <button class="add" onclick="add(${p.id})">+ Tambah</button>
+    </div>
+   </div>
+  </article>
+ `).join("");
+}
+
+function add(id){
+ const product=products.find(p=>p.id===id);
+ const found=cart.find(p=>p.id===id);
+ if(found)found.qty++;
+ else cart.push({...product,qty:1});
+ renderCart();
+}
+
+function removeItem(id){
+ cart=cart.filter(p=>p.id!==id);
+ renderCart();
+}
+
+function renderCart(){
+ document.getElementById("count").textContent=
+  cart.reduce((sum,p)=>sum+p.qty,0);
+
+ document.getElementById("items").innerHTML=cart.length
+ ?cart.map(p=>`
+  <div class="item">
+   <div>${p.name}<small>${p.qty} × ${money(p.price)}</small></div>
+   <button class="remove" onclick="removeItem(${p.id})">Hapus</button>
+  </div>
+ `).join("")
+ :'<p style="color:#a9afbd">Keranjang masih kosong. Silakan pilih produk.</p>';
+
+ document.getElementById("total").textContent=
+  money(cart.reduce((sum,p)=>sum+p.price*p.qty,0));
+}
+
+function showCart(){
+ document.getElementById("overlay").classList.add("show");
+}
+
+function hideCart(){
+ document.getElementById("overlay").classList.remove("show");
+}
+
+function checkout(){
+ if(!cart.length){
+  alert("Keranjang kamu masih kosong!");
+  return;
+ }
+
+ if(WA_NUMBER==="6285854625906"){
+  alert("Ganti nomor WhatsApp contoh di dalam kode dengan nomor toko kamu terlebih dahulu.");
+  return;
+ }
+
+ const lines=cart.map(p=>
+  `- ${p.name} (${p.qty} pcs) = ${money(p.price*p.qty)}`
+ ).join("\n");
+
+ const total=cart.reduce((sum,p)=>sum+p.price*p.qty,0);
+ const message=
+  `Halo NAWAMERCH, saya ingin memesan:\n\n${lines}\n\nTotal: ${money(total)}\n\nMohon informasi ketersediaan dan cara pembayarannya.`;
+
+ window.open(
+  "https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(message),
+  "_blank"
+ );
+}
+
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
