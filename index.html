@@ -192,11 +192,6 @@ function checkout(){
   return;
  }
 
- if(WA_NUMBER==="6285854625906"){
-  alert("Ganti nomor WhatsApp contoh di dalam kode dengan nomor toko kamu terlebih dahulu.");
-  return;
- }
-
  const lines=cart.map(p=>
   `- ${p.name} (${p.qty} pcs) = ${money(p.price*p.qty)}`
  ).join("\n");
